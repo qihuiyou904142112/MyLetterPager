@@ -1,4 +1,4 @@
-package com.qhy.letter.view.GradationTitle;
+package com.qhy.letter.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

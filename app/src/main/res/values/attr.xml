@@ -13,5 +13,11 @@
         <attr name="mi_indicatorColor" format="color|reference" />
     </declare-styleable>
 
+    <declare-styleable name="LoadingView">
+
+        <attr name="loadingText" format="string"/>
+        <attr name="loadingTextAppearance" format="reference"/>
+    </declare-styleable>
+
 
 </resources>

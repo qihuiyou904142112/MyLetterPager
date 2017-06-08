@@ -23,7 +23,7 @@ public class ChatFragment extends CommonBaseFragment {
 
     @Override
     protected void initData() {
-        mBaseTitle.setText("消息");
+        mBaseTitle.setText("情绪聊天");
         mBaseLeftBack.setVisibility(View.INVISIBLE);
     }
 }

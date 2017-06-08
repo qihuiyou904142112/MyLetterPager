@@ -2,7 +2,6 @@ package com.qhy.letter.fragment;
 
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,9 @@ import android.widget.TextView;
 
 import com.qhy.letter.R;
 import com.qhy.letter.base.CommonBaseFragment;
-import com.qhy.letter.view.GradationTitle.GradationScrollView;
-import com.qhy.letter.view.GradationTitle.MaterialIndicator;
+import com.qhy.letter.view.GradationScrollView;
+import com.qhy.letter.view.MaterialIndicator;
+import com.qhy.letter.view.banner.BGAViewPager;
 
 /**
  * Created by qihuiyou on 2017/6/2.
@@ -29,8 +29,7 @@ public class HomeFragment extends CommonBaseFragment {
     private GradationScrollView mScrollView;
     private ListView mListView;
     private TextView textView;
-    private int imageHeight;
-    private ViewPager mViewPager;
+    private BGAViewPager mViewPager;
     private MaterialIndicator mIndicator;
 
 
@@ -40,14 +39,13 @@ public class HomeFragment extends CommonBaseFragment {
         mScrollView = (GradationScrollView) inflate.findViewById(R.id.scrollview);
         mListView = (ListView) inflate.findViewById(R.id.listview);
         textView = (TextView) inflate.findViewById(R.id.textview);
-        mViewPager = (ViewPager) inflate.findViewById(R.id.viewPager);
+        mViewPager = (BGAViewPager) inflate.findViewById(R.id.viewPager);
         mIndicator = (MaterialIndicator) inflate.findViewById(R.id.indicator);
         return inflate;
     }
 
     @Override
     protected void initData() {
-
 
         mViewPager.setFocusable(true);
         mViewPager.setFocusableInTouchMode(true);
@@ -94,7 +92,7 @@ public class HomeFragment extends CommonBaseFragment {
     }
 
     /**
-     * 获取顶部图片高度后，设置滚动监听
+     * 获取顶部图片高度
      */
     private void initListeners() {
 
@@ -102,25 +100,33 @@ public class HomeFragment extends CommonBaseFragment {
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mViewPager.getViewTreeObserver().removeGlobalOnLayoutListener(
-                        this);
-                imageHeight = mViewPager.getHeight();
+                setGradationListener(mViewPager.getHeight());
+                mViewPager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            }
+        });
 
-                mScrollView.setScrollViewListener(new GradationScrollView.ScrollViewListener() {
-                    @Override
-                    public void onScrollChanged(GradationScrollView scrollView, int x, int y, int oldx, int oldy) {
-                        if (y <= 0) {   //设置标题的背景颜色
-                            textView.setBackgroundColor(Color.argb((int) 0, 144,151,166));
-                        } else if (y > 0 && y <= imageHeight) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
-                            float scale = (float) y / imageHeight;
-                            float alpha = (255 * scale);
-                            textView.setTextColor(Color.argb((int) alpha, 255,255,255));
-                            textView.setBackgroundColor(Color.argb((int) alpha, 144,151,166));
-                        } else {    //滑动到banner下面设置普通颜色
-                            textView.setBackgroundColor(Color.argb((int) 255, 144,151,166));
-                        }
-                    }
-                });
+
+    }
+
+    /**
+     * 设置动态监听
+     * @param imageHeight
+     */
+    private void setGradationListener(final int imageHeight) {
+
+        mScrollView.setScrollViewListener(new GradationScrollView.ScrollViewListener() {
+            @Override
+            public void onScrollChanged(GradationScrollView scrollView, int x, int y, int oldx, int oldy) {
+                if (y <= 0) {   //设置标题的背景颜色
+                    textView.setBackgroundColor(Color.argb((int) 0, 144,151,166));
+                } else if (y > 0 && y <= imageHeight) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+                    float scale = (float) y / imageHeight;
+                    float alpha = (255 * scale);
+                    textView.setTextColor(Color.argb((int) alpha, 255,255,255));
+                    textView.setBackgroundColor(Color.argb((int) alpha, 144,151,166));
+                } else {    //滑动到banner下面设置普通颜色
+                    textView.setBackgroundColor(Color.argb((int) 255, 144,151,166));
+                }
             }
         });
     }

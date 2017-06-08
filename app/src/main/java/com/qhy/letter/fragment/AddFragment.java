@@ -23,7 +23,7 @@ public class AddFragment extends CommonBaseFragment {
 
     @Override
     protected void initData() {
-        mBaseTitle.setText("信笺");
+        mBaseTitle.setText("情绪信笺");
         mBaseLeftBack.setVisibility(View.INVISIBLE);
     }
 }
