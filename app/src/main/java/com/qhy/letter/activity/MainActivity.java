@@ -27,7 +27,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     private long exitTime = 0;
     private RadioButton mMain_home, mMain_chat, mMain_add, mMain_life, mMain_personal;
-    private static final String TAG = "MainActivity";
 
     private ArrayList<Fragment> mFsList = new ArrayList<>();
     private RadioGroup mRg;
@@ -41,6 +40,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
+
         }
 
         setContentView(R.layout.activity_main);
