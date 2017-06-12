@@ -51,16 +51,7 @@
         </LinearLayout>
     </com.qhy.letter.view.GradationScrollView>
 
-    <TextView
-        android:id="@+id/textview"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@color/transparent"
-        android:gravity="center|bottom"
-        android:paddingBottom="10dp"
-        android:text="情绪周刊"
-        android:textColor="@color/transparent"
-        android:textSize="18sp" />
 
+    <include layout="@layout/layout_home_title"/>
 
 </RelativeLayout>

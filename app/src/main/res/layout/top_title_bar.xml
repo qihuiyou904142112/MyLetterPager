@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:text="标题"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
 
     </RelativeLayout>

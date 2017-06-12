@@ -145,6 +145,7 @@ public class ConvenientBanner<T> extends LinearLayout {
         return this;
     }
 
+
     /**
      * 底部指示器资源图片
      *

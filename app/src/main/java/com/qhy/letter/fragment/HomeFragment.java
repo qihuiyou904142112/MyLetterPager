@@ -1,14 +1,12 @@
 package com.qhy.letter.fragment;
 
 import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.ABaseTransformer;
@@ -16,6 +14,7 @@ import com.ToxicBakery.viewpager.transforms.AccordionTransformer;
 import com.qhy.letter.R;
 import com.qhy.letter.base.CommonBaseFragment;
 import com.qhy.letter.view.GradationScrollView;
+import com.qhy.letter.view.convenientbanner.CBLoopViewPager;
 import com.qhy.letter.view.convenientbanner.ConvenientBanner;
 import com.qhy.letter.view.convenientbanner.holder.CBViewHolderCreator;
 import com.qhy.letter.view.convenientbanner.holder.LocalImageHolderView;
@@ -34,12 +33,13 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
 
     private GradationScrollView mScrollView;
     private ListView mListView;
-    private TextView textView;
 //    private ViewPager mViewPager;
 //    private MaterialIndicator mIndicator;
 
     private ConvenientBanner convenientBanner;
     private ArrayList<Integer> localImages = new ArrayList<Integer>();
+    private LinearLayout mHome_ll_title;
+    private CBLoopViewPager mViewPager;
 
 
     @Override
@@ -47,7 +47,7 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
         View inflate = inflater.inflate(R.layout.fragment_home, null);
         mScrollView = (GradationScrollView) inflate.findViewById(R.id.scrollview);
         mListView = (ListView) inflate.findViewById(R.id.listview);
-        textView = (TextView) inflate.findViewById(R.id.textview);
+        mHome_ll_title = (LinearLayout) inflate.findViewById(R.id.home_ll_title);
 //        mViewPager = (ViewPager) inflate.findViewById(R.id.viewPager);
 //        mIndicator = (MaterialIndicator) inflate.findViewById(R.id.indicator);
 
@@ -60,19 +60,11 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
     @Override
     protected void initData() {
 
-//        mViewPager.setFocusable(true);
-//        mViewPager.setFocusableInTouchMode(true);
-//        mViewPager.requestFocus();
-//        mViewPager.setAdapter(new MyPagerAdapter());
-//        mViewPager.addOnPageChangeListener(mIndicator);
-//        mIndicator.setAdapter(mViewPager.getAdapter());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.data));
         mListView.setAdapter(adapter);
-
-        initListeners();
-
         initBanner();
+        initListeners();
     }
 
     // 开始自动翻页
@@ -106,16 +98,15 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
                 }, localImages)
                 //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
                 .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
-                //设置指示器的方向
-//                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
-//                .setOnPageChangeListener(this)//监听翻页事件
                 .setOnItemClickListener(this);
+
+        mViewPager = convenientBanner.getViewPager();
 
         String transforemerName = AccordionTransformer.class.getSimpleName();
         try {
             Class cls = Class.forName("com.ToxicBakery.viewpager.transforms." + transforemerName);
             ABaseTransformer transforemer = (ABaseTransformer) cls.newInstance();
-            convenientBanner.getViewPager().setPageTransformer(true, transforemer);
+            mViewPager.setPageTransformer(true, transforemer);
 
             if (transforemerName.equals("StackTransformer")) {
                 convenientBanner.setScrollDuration(1200);
@@ -132,7 +123,7 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(mContext,"点击了第"+position+"个",Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "点击了第" + position + "个", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -154,66 +145,18 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
 
 
     /**
-     * viewpager适配器
-     */
-    private class MyPagerAdapter extends PagerAdapter {
-        public int[] drawables = {R.mipmap.banner1
-                , R.mipmap.banner2, R.mipmap.banner3, R.mipmap.banner4};
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return object == view;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            ImageView view = new ImageView(container.getContext());
-            view.setImageResource(drawables[position]);
-            view.setScaleType(ImageView.ScaleType.FIT_XY);
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(((View) object));
-        }
-    }
-
-    /**
      * 获取顶部图片高度
      */
     private void initListeners() {
 
-        mScrollView.setScrollViewListener(new GradationScrollView.ScrollViewListener() {
+        ViewTreeObserver vto = mViewPager.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onScrollChanged(GradationScrollView scrollView, int x, int y, int oldx, int oldy) {
-                if (y <= 0) {   //设置标题的背景颜色
-                    textView.setBackgroundColor(Color.argb((int) 0, 62, 144, 227));
-                } else if (y > 0 && y <= 400) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
-                    float scale = (float) y / 400;
-                    float alpha = (255 * scale);
-                    textView.setTextColor(Color.argb((int) alpha, 255, 255, 255));
-                    textView.setBackgroundColor(Color.argb((int) alpha, 62, 144, 227));
-                } else {    //滑动到banner下面设置普通颜色
-                    textView.setBackgroundColor(Color.argb((int) 255, 62, 144, 227));
-                }
+            public void onGlobalLayout() {
+                setGradationListener(mViewPager.getHeight());
+                mViewPager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
-
-//        ViewTreeObserver vto = mViewPager.getViewTreeObserver();
-//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-////                setGradationListener(mViewPager.getHeight());
-////                mViewPager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//            }
-//        });
 
 
     }
@@ -229,14 +172,13 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
             @Override
             public void onScrollChanged(GradationScrollView scrollView, int x, int y, int oldx, int oldy) {
                 if (y <= 0) {   //设置标题的背景颜色
-                    textView.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+                    mHome_ll_title.setBackgroundColor(Color.argb((int) 0, 62, 144, 227));
                 } else if (y > 0 && y <= imageHeight) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
                     float scale = (float) y / imageHeight;
                     float alpha = (255 * scale);
-                    textView.setTextColor(Color.argb((int) alpha, 255, 255, 255));
-                    textView.setBackgroundColor(Color.argb((int) alpha, 144, 151, 166));
+                    mHome_ll_title.setBackgroundColor(Color.argb((int) alpha, 62, 144, 227));
                 } else {    //滑动到banner下面设置普通颜色
-                    textView.setBackgroundColor(Color.argb((int) 255, 144, 151, 166));
+                    mHome_ll_title.setBackgroundColor(Color.argb((int) 255, 62, 144, 227));
                 }
             }
         });
