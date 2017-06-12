@@ -16,21 +16,22 @@ import android.view.animation.Interpolator;
 
 import com.qhy.letter.R;
 
-public class MaterialIndicator extends View implements ViewPager.OnPageChangeListener {
+public class MaterialIndicator extends View implements ViewPager.OnPageChangeListener{
 
     private static final String TAG = MaterialIndicator.class.getSimpleName();
     private static final int UNDEFINED_PADDING = -1;
     private final Interpolator interpolator = new FastOutSlowInInterpolator();
+
     private final Paint indicatorPaint;
     private final Paint selectedIndicatorPaint;
     private final float indicatorRadius;
     private final float indicatorPadding;
-
     private final RectF selectorRect;
     private int count;
     private int selectedPage = 0;
     private float deselectedAlpha = 0.2f;
     private float offset;
+
 
     public MaterialIndicator(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -145,5 +146,6 @@ public class MaterialIndicator extends View implements ViewPager.OnPageChangeLis
     private float midY() {
         return getHeight() / 2f;
     }
+
 
 }
