@@ -33,7 +33,6 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
 
     private GradationScrollView mScrollView;
     private ListView mListView;
-//    private ViewPager mViewPager;
 //    private MaterialIndicator mIndicator;
 
     private ConvenientBanner convenientBanner;
@@ -48,7 +47,6 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
         mScrollView = (GradationScrollView) inflate.findViewById(R.id.scrollview);
         mListView = (ListView) inflate.findViewById(R.id.listview);
         mHome_ll_title = (LinearLayout) inflate.findViewById(R.id.home_ll_title);
-//        mViewPager = (ViewPager) inflate.findViewById(R.id.viewPager);
 //        mIndicator = (MaterialIndicator) inflate.findViewById(R.id.indicator);
 
         convenientBanner = (ConvenientBanner) inflate.findViewById(R.id.convenientBanner);
@@ -62,10 +60,13 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.data));
+        mViewPager = convenientBanner.getViewPager();
         mListView.setAdapter(adapter);
         initBanner();
         initListeners();
+        setTransformer();
     }
+
 
     // 开始自动翻页
     @Override
@@ -86,9 +87,9 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
     private void initBanner() {
 
         //本地图片集合
-        for (int position = 0; position < 7; position++)
+        for (int position = 0; position < 7; position++) {
             localImages.add(getResId("ic_test_" + position, R.drawable.class));
-
+        }
         convenientBanner.setPages(
                 new CBViewHolderCreator<LocalImageHolderView>() {
                     @Override
@@ -100,7 +101,12 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
                 .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
                 .setOnItemClickListener(this);
 
-        mViewPager = convenientBanner.getViewPager();
+    }
+
+    /**
+     * 设置banner轮播动画
+     */
+    private void setTransformer() {
 
         String transforemerName = AccordionTransformer.class.getSimpleName();
         try {
@@ -119,12 +125,10 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
     }
 
-    @Override
-    public void onItemClick(int position) {
-        Toast.makeText(mContext, "点击了第" + position + "个", Toast.LENGTH_SHORT).show();
-    }
+
 
     /**
      * 通过文件名获取资源id 例子：getResId("icon", R.drawable.class);
@@ -158,7 +162,6 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
             }
         });
 
-
     }
 
     /**
@@ -182,6 +185,12 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(mContext, "点击了第" + position + "个", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -25,7 +25,7 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
-    <style name="Main_RadioButton" parent="Base">
+    <style name="Main_Home_Button" parent="Base">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>

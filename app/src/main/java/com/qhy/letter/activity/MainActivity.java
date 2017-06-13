@@ -8,9 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.qhy.letter.R;
 import com.qhy.letter.fragment.AddFragment;
@@ -23,13 +24,13 @@ import com.qhy.letter.utils.T;
 
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
     private long exitTime = 0;
-    private RadioButton mMain_home, mMain_chat, mMain_add, mMain_life, mMain_personal;
-
+    private TextView mMain_home, mMain_chat, mMain_life, mMain_personal;
+    private ImageView mMain_add;
     private ArrayList<Fragment> mFsList = new ArrayList<>();
-    private RadioGroup mRg;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,18 +55,21 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
 
     private void initView() {
-        mMain_home = (RadioButton) findViewById(R.id.main_home);
-        mMain_chat = (RadioButton) findViewById(R.id.main_chat);
-        mMain_add = (RadioButton) findViewById(R.id.main_add);
-        mMain_life = (RadioButton) findViewById(R.id.main_life);
-        mMain_personal = (RadioButton) findViewById(R.id.main_personal);
-        mRg = (RadioGroup) findViewById(R.id.rg_title);
+        mMain_home = (TextView) findViewById(R.id.main_home);
+        mMain_chat = (TextView) findViewById(R.id.main_chat);
+        mMain_add = (ImageView) findViewById(R.id.main_add);
+        mMain_life = (TextView) findViewById(R.id.main_life);
+        mMain_personal = (TextView) findViewById(R.id.main_personal);
 
     }
 
 
     private void initListener() {
-        mRg.setOnCheckedChangeListener(this);
+        mMain_home.setOnClickListener(this);
+        mMain_chat.setOnClickListener(this);
+        mMain_add.setOnClickListener(this);
+        mMain_life.setOnClickListener(this);
+        mMain_personal.setOnClickListener(this);
     }
 
     private void initTabFragment() {
@@ -75,7 +79,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         mFsList.add(new ChatFragment());
         mFsList.add(new PersonalFragment());
 
-        mRg.check(R.id.main_home); //默认选中首页
         changeFrag(0);
 
     }
@@ -118,6 +121,17 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
 
+
+    /**
+     * 导航栏TOP图标
+     *
+     * @param id
+     * @param view
+     */
+    private void style(TextView view,int id) {
+        view.setCompoundDrawablesRelativeWithIntrinsicBounds(null, ContextCompat.getDrawable(this, id), null, null);
+    }
+
     @Override
     public void onBackPressed() {
 
@@ -129,24 +143,54 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         CommonUtil.exitApp(MainActivity.this);
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-        switch (checkedId) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.main_home:
+
                 changeFrag(0);
+
+                style(mMain_home,R.mipmap.main_home_press);
+                style(mMain_life,R.mipmap.main_life_normal);
+                style(mMain_chat,R.mipmap.main_chat_normal);
+                style(mMain_personal,R.mipmap.main_personal_normal);
                 break;
             case R.id.main_life:
+
                 changeFrag(1);
+
+                style(mMain_home,R.mipmap.main_home_normal);
+                style(mMain_life,R.mipmap.main_life_press);
+                style(mMain_chat,R.mipmap.main_chat_normal);
+                style(mMain_personal,R.mipmap.main_personal_normal);
                 break;
             case R.id.main_add:
+
                 changeFrag(2);
+
+                style(mMain_home,R.mipmap.main_home_normal);
+                style(mMain_life,R.mipmap.main_life_normal);
+                style(mMain_chat,R.mipmap.main_chat_normal);
+                style(mMain_personal,R.mipmap.main_personal_normal);
                 break;
             case R.id.main_chat:
+
                 changeFrag(3);
+
+                style(mMain_home,R.mipmap.main_home_normal);
+                style(mMain_life,R.mipmap.main_life_normal);
+                style(mMain_chat,R.mipmap.main_chat_press);
+                style(mMain_personal,R.mipmap.main_personal_normal);
                 break;
             case R.id.main_personal:
+
                 changeFrag(4);
+
+                style(mMain_home,R.mipmap.main_home_normal);
+                style(mMain_life,R.mipmap.main_life_normal);
+                style(mMain_chat,R.mipmap.main_chat_normal);
+                style(mMain_personal,R.mipmap.main_personal_press);
                 break;
         }
     }
