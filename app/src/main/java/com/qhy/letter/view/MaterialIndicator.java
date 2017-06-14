@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
@@ -76,8 +75,8 @@ public class MaterialIndicator extends View implements ViewPager.OnPageChangeLis
 
     }
 
-    public void setAdapter(PagerAdapter adapter) {
-        this.count = adapter.getCount();
+    public void setAdapter(int num) {
+        this.count = num;
         requestLayout();
         invalidate();
     }

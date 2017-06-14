@@ -7,13 +7,19 @@ import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.ABaseTransformer;
 import com.ToxicBakery.viewpager.transforms.AccordionTransformer;
 import com.qhy.letter.R;
+import com.qhy.letter.adapter.HomeGirdViewAdapter;
 import com.qhy.letter.base.CommonBaseFragment;
+import com.qhy.letter.utils.T;
+import com.qhy.letter.view.GifView;
 import com.qhy.letter.view.GradationScrollView;
+import com.qhy.letter.view.MyGridView;
+import com.qhy.letter.view.UpDownViewSwitcher;
 import com.qhy.letter.view.convenientbanner.CBLoopViewPager;
 import com.qhy.letter.view.convenientbanner.ConvenientBanner;
 import com.qhy.letter.view.convenientbanner.holder.CBViewHolderCreator;
@@ -33,13 +39,14 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
 
     private GradationScrollView mScrollView;
     private ListView mListView;
-//    private MaterialIndicator mIndicator;
 
     private ConvenientBanner convenientBanner;
     private ArrayList<Integer> localImages = new ArrayList<Integer>();
     private LinearLayout mHome_ll_title;
     private CBLoopViewPager mViewPager;
-
+    private UpDownViewSwitcher mViewSwitcher;
+    private GifView mGf_wang, mGf_zhe, mGf_rong, mGf_yao;
+    private MyGridView myGridView;
 
     @Override
     protected View initView(LayoutInflater inflater) {
@@ -47,26 +54,22 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
         mScrollView = (GradationScrollView) inflate.findViewById(R.id.scrollview);
         mListView = (ListView) inflate.findViewById(R.id.listview);
         mHome_ll_title = (LinearLayout) inflate.findViewById(R.id.home_ll_title);
-//        mIndicator = (MaterialIndicator) inflate.findViewById(R.id.indicator);
 
         convenientBanner = (ConvenientBanner) inflate.findViewById(R.id.convenientBanner);
+
+        mViewSwitcher = (UpDownViewSwitcher) inflate.findViewById(R.id.home_view_switcher);
+
+
+        mGf_wang = (GifView) inflate.findViewById(R.id.gf_wang);
+        mGf_zhe = (GifView) inflate.findViewById(R.id.gf_zhe);
+        mGf_rong = (GifView) inflate.findViewById(R.id.gf_rong);
+        mGf_yao = (GifView) inflate.findViewById(R.id.gf_yao);
+
+        myGridView = (MyGridView) inflate.findViewById(R.id.home_gr);
 
 
         return inflate;
     }
-
-    @Override
-    protected void initData() {
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.data));
-        mViewPager = convenientBanner.getViewPager();
-        mListView.setAdapter(adapter);
-        initBanner();
-        initListeners();
-        setTransformer();
-    }
-
 
     // 开始自动翻页
     @Override
@@ -84,12 +87,54 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
         convenientBanner.stopTurning();
     }
 
+    @Override
+    protected void initData() {
+
+        myGridView.setAdapter(new HomeGirdViewAdapter(mContext));
+
+        setHomeGifViewData();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.data));
+        mViewPager = convenientBanner.getViewPager();
+        mListView.setAdapter(adapter);
+        initBanner();
+        initListeners();
+        setTransformer();
+        setSwitvher();
+    }
+
+    /**
+     * 设置GIF动态图片资源
+     */
+    private void setHomeGifViewData() {
+
+        mGf_wang.setMovieResource(R.drawable.wang);
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mGf_wang.setPaused(true);
+//
+//
+//            }
+//        },3000);
+
+        mGf_zhe.setMovieResource(R.drawable.zhe);
+        mGf_rong.setMovieResource(R.drawable.rong);
+        mGf_yao.setMovieResource(R.drawable.yao);
+
+    }
+
+
+
+
     private void initBanner() {
 
         //本地图片集合
         for (int position = 0; position < 7; position++) {
             localImages.add(getResId("ic_test_" + position, R.drawable.class));
         }
+
+
         convenientBanner.setPages(
                 new CBViewHolderCreator<LocalImageHolderView>() {
                     @Override
@@ -100,6 +145,31 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
                 //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
                 .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
                 .setOnItemClickListener(this);
+
+
+    }
+
+    /**
+     * 设置轮播条目
+     */
+    private void setSwitvher() {
+
+        mViewSwitcher.setSwitcheNextViewListener(new UpDownViewSwitcher.SwitchNextViewListener() {
+            @Override
+            public void switchTONextView(View nextView, int index) {
+                if (nextView == null) return;
+                ((TextView) nextView.findViewById(R.id.textview)).setText("测试内容是法国的风格的风格的风格的风格:" + index);
+
+                ((TextView) nextView.findViewById(R.id.switch_title_text)).setText("测试title:");
+                nextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        T.showShort(mContext, "待完成");
+                    }
+                });
+            }
+        });
+        mViewSwitcher.setContentLayout(R.layout.switch_view);
 
     }
 
@@ -127,7 +197,6 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
         }
 
     }
-
 
 
     /**

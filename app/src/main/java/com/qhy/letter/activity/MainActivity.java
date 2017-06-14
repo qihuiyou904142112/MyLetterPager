@@ -121,7 +121,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-
     /**
      * 导航栏TOP图标
      *
@@ -151,46 +150,53 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                 changeFrag(0);
 
-                style(mMain_home,R.mipmap.main_home_press);
-                style(mMain_life,R.mipmap.main_life_normal);
-                style(mMain_chat,R.mipmap.main_chat_normal);
-                style(mMain_personal,R.mipmap.main_personal_normal);
+                style(mMain_home,R.mipmap.tab_news_selected);
+                style(mMain_life,R.mipmap.tab_find_normal);
+                style(mMain_chat,R.mipmap.tab_battle_normal);
+                style(mMain_personal,R.mipmap.tab_auxiliary_normal);
+
                 break;
             case R.id.main_life:
 
                 changeFrag(1);
 
-                style(mMain_home,R.mipmap.main_home_normal);
-                style(mMain_life,R.mipmap.main_life_press);
-                style(mMain_chat,R.mipmap.main_chat_normal);
-                style(mMain_personal,R.mipmap.main_personal_normal);
+
+                style(mMain_home,R.mipmap.tab_news_normal);
+                style(mMain_life,R.mipmap.tab_find_selected);
+                style(mMain_chat,R.mipmap.tab_battle_normal);
+                style(mMain_personal,R.mipmap.tab_auxiliary_normal);
+
                 break;
             case R.id.main_add:
 
                 changeFrag(2);
 
-                style(mMain_home,R.mipmap.main_home_normal);
-                style(mMain_life,R.mipmap.main_life_normal);
-                style(mMain_chat,R.mipmap.main_chat_normal);
-                style(mMain_personal,R.mipmap.main_personal_normal);
+
+                style(mMain_home,R.mipmap.tab_news_normal);
+                style(mMain_life,R.mipmap.tab_find_normal);
+                style(mMain_chat,R.mipmap.tab_battle_normal);
+                style(mMain_personal,R.mipmap.tab_auxiliary_normal);
+
                 break;
             case R.id.main_chat:
 
                 changeFrag(3);
 
-                style(mMain_home,R.mipmap.main_home_normal);
-                style(mMain_life,R.mipmap.main_life_normal);
-                style(mMain_chat,R.mipmap.main_chat_press);
-                style(mMain_personal,R.mipmap.main_personal_normal);
+                style(mMain_home,R.mipmap.tab_news_normal);
+                style(mMain_life,R.mipmap.tab_find_normal);
+                style(mMain_chat,R.mipmap.tab_battle_selected);
+                style(mMain_personal,R.mipmap.tab_auxiliary_normal);
+
                 break;
             case R.id.main_personal:
 
                 changeFrag(4);
 
-                style(mMain_home,R.mipmap.main_home_normal);
-                style(mMain_life,R.mipmap.main_life_normal);
-                style(mMain_chat,R.mipmap.main_chat_normal);
-                style(mMain_personal,R.mipmap.main_personal_press);
+                style(mMain_home,R.mipmap.tab_news_normal);
+                style(mMain_life,R.mipmap.tab_find_normal);
+                style(mMain_chat,R.mipmap.tab_battle_normal);
+                style(mMain_personal,R.mipmap.tab_auxiliary_selected);
+
                 break;
         }
     }

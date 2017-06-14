@@ -18,18 +18,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/main_home_press"
+            android:drawableTop="@mipmap/tab_news_selected"
             android:gravity="center"
-            android:text="首页" />
+            android:text="资讯" />
 
         <TextView
             android:id="@+id/main_life"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/main_life_normal"
+            android:drawableTop="@mipmap/tab_find_normal"
             android:gravity="center"
-            android:text="生活" />
+            android:text="发现" />
 
         <TextView
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/main_chat_normal"
+            android:drawableTop="@mipmap/tab_battle_normal"
             android:gravity="center"
             android:text="消息" />
 
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/main_personal_normal"
+            android:drawableTop="@mipmap/tab_auxiliary_normal"
             android:gravity="center"
             android:text="我的" />
 

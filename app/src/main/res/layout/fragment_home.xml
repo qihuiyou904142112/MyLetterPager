@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f5f5f5"
     android:orientation="vertical">
 
     <com.qhy.letter.view.GradationScrollView
@@ -18,21 +19,6 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
-            <!--  <android.support.v4.view.ViewPager
-                  android:id="@+id/viewPager"
-                  android:layout_width="match_parent"
-                  android:layout_height="200dp" />
-
-              <com.qhy.letter.view.MaterialIndicator
-                  android:id="@+id/indicator"
-                  style="@style/MaterialIndicator.Demo"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="center_horizontal"
-                  android:paddingBottom="16dp"
-                  android:paddingLeft="16dp"
-                  android:paddingRight="16dp"
-                  android:paddingTop="16dp" />-->
 
             <com.qhy.letter.view.convenientbanner.ConvenientBanner
                 android:id="@+id/convenientBanner"
@@ -40,15 +26,41 @@
                 android:layout_height="200dp"
                 app:canLoop="true" />
 
+            <include layout="@layout/layout_home_center"/>
+
+            <include layout="@layout/layout_home_gridview"/>
+
+            <com.qhy.letter.view.MyGridView
+                android:id="@+id/home_gr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EBEBEB"
+                android:focusable="false"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:padding="5dp"
+                android:scrollbars="none"
+                android:verticalSpacing="10dp">
+
+            </com.qhy.letter.view.MyGridView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/home_gd" />
+
             <com.qhy.letter.view.NoScrollListview
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:layout_height="wrap_content">
 
             </com.qhy.letter.view.NoScrollListview>
+
         </LinearLayout>
+
     </com.qhy.letter.view.GradationScrollView>
 
 
