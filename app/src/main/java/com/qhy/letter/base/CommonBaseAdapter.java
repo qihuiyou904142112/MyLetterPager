@@ -33,7 +33,11 @@ public abstract class CommonBaseAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDatas.size();
+        if(mDatas == null){
+            return 0;
+        }else{
+            return mDatas.size();
+        }
     }
 
     @Override
@@ -49,11 +53,11 @@ public abstract class CommonBaseAdapter<T> extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = ViewHolder.get(mContext, convertView, parent, layoutId, position);
-        convert(holder, getItem(position));
+        convert(holder, getItem(position),position);
         return holder.getConvertView();
     }
 
-    public abstract void convert(ViewHolder holder, T t);
+    public abstract void convert(ViewHolder holder, T t, int position);
 
 
 }

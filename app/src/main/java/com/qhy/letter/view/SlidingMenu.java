@@ -166,7 +166,7 @@ public class SlidingMenu extends HorizontalScrollView {
     /**
      * 5.1.2 打开菜单
      */
-    private void openMenu() {
+    public void openMenu() {
         smoothScrollTo(0, 0);
         mMenuIsOpen = true;
     }
@@ -174,7 +174,7 @@ public class SlidingMenu extends HorizontalScrollView {
     /**
      * 5.1.1 关闭菜单
      */
-    private void closeMenu() {
+    public void closeMenu() {
         smoothScrollTo(mMenuWidth, 0);
         mMenuIsOpen = false;
     }

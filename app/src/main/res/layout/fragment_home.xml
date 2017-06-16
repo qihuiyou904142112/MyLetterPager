@@ -37,11 +37,10 @@
                 android:background="#EBEBEB"
                 android:focusable="false"
                 android:gravity="center"
-                android:horizontalSpacing="10dp"
+                android:horizontalSpacing="1dp"
                 android:numColumns="4"
-                android:padding="5dp"
                 android:scrollbars="none"
-                android:verticalSpacing="10dp">
+                android:verticalSpacing="1dp">
 
             </com.qhy.letter.view.MyGridView>
 
