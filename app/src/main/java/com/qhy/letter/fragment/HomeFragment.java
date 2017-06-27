@@ -1,8 +1,10 @@
 package com.qhy.letter.fragment;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -49,7 +51,7 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
     private MyGridView myGridView;
 
     @Override
-    protected View initView(LayoutInflater inflater) {
+    protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_home, null);
         mScrollView = (GradationScrollView) inflate.findViewById(R.id.scrollview);
         mListView = (ListView) inflate.findViewById(R.id.listview);
@@ -250,7 +252,10 @@ public class HomeFragment extends CommonBaseFragment implements OnItemClickListe
                     float alpha = (255 * scale);
                     mHome_ll_title.setBackgroundColor(Color.argb((int) alpha, 62, 144, 227));
                 } else {    //滑动到banner下面设置普通颜色
+
                     mHome_ll_title.setBackgroundColor(Color.argb((int) 255, 62, 144, 227));
+
+                    mHome_ll_title.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
             }
         });

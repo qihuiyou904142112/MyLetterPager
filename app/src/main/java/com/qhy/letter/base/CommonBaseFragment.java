@@ -35,6 +35,16 @@ public abstract class CommonBaseFragment extends Fragment {
     protected MainActivity mContext;
     private TextView statusView;
 
+    /**
+     * 初始化view
+     */
+    protected  abstract View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+
+    /**
+     * 初始化数据
+     */
+    protected  abstract void initData();
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -51,7 +61,7 @@ public abstract class CommonBaseFragment extends Fragment {
 //        setTranslucentStatus();
 
 
-        view = initView(inflater);
+        view = initView(inflater,container,savedInstanceState);
         //---------------标题栏----------------
         mBaseTitle = (TextView) view.findViewById(R.id.base_tv_title);
         mBaseLeftBack = (RelativeLayout) view.findViewById(R.id.base_left_back);
@@ -82,15 +92,7 @@ public abstract class CommonBaseFragment extends Fragment {
         initData();
     }
 
-    /**
-     * 初始化view
-     */
-    protected  abstract View initView(LayoutInflater inflater);
 
-    /**
-     * 初始化数据
-     */
-    protected  abstract void initData();
 
     protected void setTranslucentStatus() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

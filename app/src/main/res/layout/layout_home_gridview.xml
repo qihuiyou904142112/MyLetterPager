@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@mipmap/icon_one"
+            android:src="@mipmap/one"
             app:BorderColor="#E6E6E6" />
 
         <LinearLayout

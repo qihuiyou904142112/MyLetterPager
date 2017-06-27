@@ -19,7 +19,7 @@ public class HttpUtils {
         RequestParams params = new RequestParams(url);
         params.setAsJsonContent(true);
         params.setBodyContent(json.toString());
-        Logs.i("requestLogin", "param: "+json.toString());
+        Logs.i("request", "param: "+json.toString());
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -58,16 +58,21 @@ public class HttpUtils {
         RequestParams params = new RequestParams(url);
         params.setAsJsonContent(true);
         params.setBodyContent(json.toString());
-        Logs.i("requestLogin", "param: "+json.toString());
+        Logs.i("request", "param: "+json.toString());
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
+                if(null != mCallBack){
+                    mCallBack.onSuccess(result);
+                }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Logs.d("onError", "onError: "+ex.getMessage());
+                if(null != mCallBack){
+                    mCallBack.onError(ex.getMessage());
+                }
             }
 
             @Override

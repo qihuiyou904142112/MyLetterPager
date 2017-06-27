@@ -19,7 +19,6 @@ import com.qhy.letter.R;
  */
 public class MyImageView extends ImageView {
 
-	private String namespace = "http://com.qhy.letter.view";
 	private int color;
 
 	public MyImageView(Context context, AttributeSet attrs) {

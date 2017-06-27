@@ -238,6 +238,7 @@ public class ConvenientBanner<T> extends LinearLayout {
      * */
     private void initViewPagerScroll() {
         try {
+
             Field mScroller = null;
             mScroller = ViewPager.class.getDeclaredField("mScroller");
             mScroller.setAccessible(true);
@@ -274,6 +275,7 @@ public class ConvenientBanner<T> extends LinearLayout {
             // 停止翻页
             if (canTurn)stopTurning();
         }
+
         return super.dispatchTouchEvent(ev);
     }
 

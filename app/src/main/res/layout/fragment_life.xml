@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MergeRootFrame">
 
 
-    <include layout="@layout/top_title_bar"/>
+    <include layout="@layout/top_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/locbtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/set_location_sel" />
+
+            <Button
+                android:id="@+id/stobtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="动态申请存储权限"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>
